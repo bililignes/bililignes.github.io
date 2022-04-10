@@ -1,33 +1,76 @@
 module.exports = {
   siteMetadata: {
     title: 'ephraim.bililign',
-    description:
-      'Ephraim is a physics grad student with an interest in complex systems',
+    description: 'Ephraim is a physicist trying to simplify complex systems',
     url: 'https://ephraim.bililign.com',
     author: 'Ephraim Bililign',
-    image: 'https://gatsby-starter-amsterdam.netlify.com/og-image.jpg',
-    intro: 'Ephraim is a physics grad student with an interest in complex systems',
+    // image: '',
+    intro: 'Ephraim is a physicist trying to simplify complex systems',
     menuLinks: [
       {
         name: 'ephraim.bililign',
         slug: '/',
       },
       {
-        name: 'Example',
-        slug: '/example/',
+        name: 'Media',
+        slug: '/media/',
+      },
+      {
+        name: 'About',
+        slug: '/about/',
       },
     ],
     footerLinks: [
       {
-        name: 'Gatsby + Amsterdam',
+        name: '[built with Gatsby + Amsterdam]',
         url: 'https://github.com/ryanwiemer/gatsby-theme-amsterdam',
       },
     ],
   },
   plugins: ['gatsby-plugin-theme-ui',
     {
+      "resolve": `gatsby-transformer-remark`,
+      "options": {
+        "excerpt_separator": `<!-- endexcerpt -->`
+      }
+    },
+    {
+      resolve: "gatsby-transformer-remark",
+      options: {
+        plugins: [
+          {
+            resolve: "gatsby-remark-embed-video",
+            options: {
+              width: 800,
+              ratio: 1.77, // Optional: Defaults to 16/9 = 1.77
+              height: 400, // Optional: Overrides optional.ratio
+              related: false, //Optional: Will remove related videos from the end of an embedded YouTube video.
+              noIframeBorder: true, //Optional: Disable insertion of <style> border: 0
+              loadingStrategy: 'lazy', //Optional: Enable support for lazy-load offscreen iframes. Default is disabled.
+              urlOverrides: [
+                {
+                  id: "youtube",
+                  embedURL: videoId =>
+                      `https://www.youtube-nocookie.com/embed/${videoId}`,
+                },
+              ], //Optional: Override URL of a service provider, e.g to enable youtube-nocookie support
+              containerClass: "embedVideo-container", //Optional: Custom CSS class for iframe container, for multiple classes separate them by space
+              iframeId: false, //Optional: if true, iframe's id will be set to what is provided after 'video:' (YouTube IFrame player API requires iframe id)
+            },
+          },
+        ],
+      },
+    },
+    {
       resolve: 'gatsby-theme-amsterdam',
       options: {},
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `documentation`,
+        name: `documentation`,
+      },
     },
     {
       resolve: `gatsby-plugin-manifest`,
